@@ -1,0 +1,1 @@
+Solving coding puzzles from the 2022 [Advent of Code](https://adventofcode.com/) project in the Rust programming language.
