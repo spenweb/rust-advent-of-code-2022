@@ -30,6 +30,12 @@ fn main() {
                     if arg == "2.2" {
                         days::two::part_two()
                     }
+                    if arg == "3.1" {
+                        days::three::part_one()
+                    }
+                    if arg == "3.2" {
+                        days::three::part_two()
+                    }
                 }
             }
         }
