@@ -36,6 +36,9 @@ fn main() {
                     if arg == "3.2" {
                         days::three::part_two()
                     }
+                    if arg == "4.0" {
+                        days::four::part_one()
+                    }
                 }
             }
         }
