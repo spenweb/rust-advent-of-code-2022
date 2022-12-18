@@ -45,6 +45,52 @@ pub fn part_one() {
     println!();
 }
 
+pub fn part_two() {
+    let input_file = "./input/5.txt";
+    let mut stack_lines: Vec<String> = vec![];
+    let mut instructions: Vec<Instruction> = vec![];
+    let mut stacks: Vec<Vec<char>> = vec![];
+
+    let mut is_loading_stack = true;
+
+    if let Ok(lines) = utils::read_lines(input_file) {
+        for line in lines {
+            if let Ok(datum) = line {
+                if datum.is_empty() {
+                    if is_loading_stack {
+                        stacks = parse_stack_lines(&stack_lines);
+                        println!("Rotated matrix:");
+                        print_matrix(&stacks);
+                    }
+                    is_loading_stack = false;
+                } else {
+                    if is_loading_stack {
+                        stack_lines.push(datum);
+                    } else {
+                        instructions.push(parse_instruction_line(datum));
+                    }
+                }
+            }
+        }
+    }
+
+    // Move items in stacks
+    for instruction in instructions {
+        let len = stacks[instruction.from as usize - 1].len();
+        let mut items: Vec<char> = stacks[instruction.from as usize - 1]
+            .splice((len - instruction.amount as usize).., [])
+            .collect();
+        stacks[instruction.to as usize - 1].append(&mut items);
+    }
+
+    println!("\nTop crates:");
+    for x in 0..stacks.len() {
+        let top_crate = stacks[x].last().unwrap();
+        print!("{top_crate}");
+    }
+    println!();
+}
+
 fn parse_stack_lines(lines: &Vec<String>) -> Vec<Vec<char>> {
     let mut cleaned_matrix: Vec<Vec<char>> = vec![];
     for line in lines {
